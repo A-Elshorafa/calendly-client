@@ -1,6 +1,6 @@
 import React from "react";
 import Image from 'next/image'
-import {Input} from "../components";
+import {Input} from "../components/inputs";
 
 export default class LoginLayout extends React.Component
 {
@@ -34,7 +34,7 @@ export default class LoginLayout extends React.Component
                 <div>
                   <label htmlFor="email-address" className="text-black-100 font-m font-bold mb-2">Email address</label>
                   <Input
-                    styles="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     name="email"
                     type="email" 
                     id="email-address"
@@ -52,7 +52,7 @@ export default class LoginLayout extends React.Component
                 <div className="mt-4">
                   <label htmlFor="password" className="text-black-100 font-m font-bold mb-2">Password</label>
                   <Input
-                    styles="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" 
+                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" 
                     id="password"
                     name="password"
                     type="password" 
