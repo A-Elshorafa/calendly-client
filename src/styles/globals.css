@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    height: 100vh;
+    overflow: hidden;
+}
+
+#__next {
+    height: 100%;
+}
+
+.h-calc-vf-294 {
+    height: calc(100vh - 294px);
+}
