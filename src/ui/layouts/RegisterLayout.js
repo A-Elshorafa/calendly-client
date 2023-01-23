@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Input} from "../components";
+import {Input} from "../components/inputs";
 
 export default class RegisterLayout extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ export default class RegisterLayout extends Component {
                 <div>
                   <label htmlFor="user-name" className="text-black-100 font-m font-bold mb-2">Name</label>
                   <Input
-                    styles="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     type="text"
                     id="user-name"
                     placeholder="Name"
@@ -54,7 +54,7 @@ export default class RegisterLayout extends Component {
                 <div>
                   <label htmlFor="email-address" className="text-black-100 font-m font-bold mb-2">Email address</label>
                   <Input
-                    styles="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     type="email" 
                     id="email-address"
                     autoComplete="email"
@@ -71,7 +71,7 @@ export default class RegisterLayout extends Component {
                 <div>
                   <label htmlFor="password" className="text-black-100 font-m font-bold mb-2">Password</label>
                   <Input
-                    styles="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" 
+                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" 
                     id="password"
                     type="password" 
                     placeholder="Password"
@@ -87,7 +87,7 @@ export default class RegisterLayout extends Component {
                 <div>
                   <label htmlFor="password-confirmation" className="text-black-100 font-m font-bold mb-2">Password Confirmation</label>
                   <Input
-                    styles="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" 
+                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" 
                     type="password"
                     id="password-confirmation"
                     placeholder="Password Confirmation"

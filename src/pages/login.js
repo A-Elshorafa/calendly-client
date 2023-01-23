@@ -11,6 +11,7 @@ const Login = _ => {
     event.preventDefault();
     
     const {email, password} = payload;
+    axios.get(endpoints.csrf);
     axios.post(endpoints.login, {email, password}).then( response => {
       if (response && response.data && response.data.success) {
         router.push('/');

@@ -17,7 +17,9 @@ export default class Input extends Component {
       id,
       name,
       type,
-      styles,
+      value,
+      disabled,
+      className,
       placeholder,
       autoComplete
     } = this.props;
@@ -26,7 +28,9 @@ export default class Input extends Component {
         id={id}
         name={name}
         type={type}
-        className={styles}
+        value={value}
+        disabled={disabled}
+        className={className}
         placeholder={placeholder}
         autoComplete={autoComplete}
         onChange={this.handleChangeText}
