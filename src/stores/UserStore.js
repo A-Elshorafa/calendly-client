@@ -2,7 +2,7 @@ import { observable, makeObservable, action } from "mobx";
 
 class UserStoreClass
 {
-  id = "";
+  id = -1;
   name = "";
 
   updateUserInfo(info) {
@@ -10,10 +10,16 @@ class UserStoreClass
     this.name = info.name;
   }
 
+  clearData() {
+    this.id = -1;
+    this.name = "";
+  }
+
   constructor() {
     makeObservable(this, {
       id: observable,
       name: observable,
+      clearData: action,
       updateUserInfo: action
     });
   }
