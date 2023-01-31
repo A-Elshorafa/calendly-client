@@ -1,43 +1,76 @@
+import Link from "next/link";
+import Image from "next/image";
 import React, {Component} from "react";
-import {RoundedButton} from "../components/buttons";
-import {StackedNavigation} from "../components/navigation";
-import {EventCard, RoundedCard} from "../components/cards";
+import { CustomModal } from "../components/modals";
+import { RoundedFilledButton } from "../components/buttons";
+import { StackedNavigation } from "../components/navigation";
+import { EventCard, RoundedCard } from "../components/cards";
+import { CardTitle, TitleAndValue } from "../components/label";
+import { ContentNotFound, ImageLoader } from "../components/actionComponents";
 
-export default class EventDashbord extends Component
+export default class EventDashbordLayout extends Component
 {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {
-      user,
+      userName,
+      modalType,
       pendingEvents,
       eventStatuses,
       onClickLogout,
       upComingEvents,
+      isEventsLoading,
+      isScreenLoading,
       onClickCreateNew,
+      areEventsNotFound,
       onClickDeleteEvent,
+      deleteModalMessage,
       onSelectEventStatus,
+      onCancelDeleteModal,
+      onConfirmDeleteModal,
+      onClickPendingEventCard,
+      onClickUpcomingEventCard
     } = this.props;
     return (
-      <div className="w-full h-full-screen overflow-hidden">
+      <div className="w-full h-full-screen overflow-hidden relative">
+        {deleteModalMessage !=='' &&
+          <CustomModal
+            cancelText="Cancel"
+            title="Delete Event"
+            confirmText="Delete"
+            description={deleteModalMessage}
+            withButtons={modalType==='warning'}
+            onClickCancel={onCancelDeleteModal}
+            onClickConfirm={onConfirmDeleteModal}
+            confirmationStyle="bg-red-500 hover:bg-red-600"
+          />
+        }
+        {isScreenLoading && 
+          <ImageLoader/>
+        }
         <div className="border border-spacing-1 w-full drop-shadow-xl bg-gray-100">
           <div className="p-4 flex flex-row items-center justify-between">
-            <label className="font-bold text-4xl text-slate-900">Events Dashbord</label>
-            <a href={onClickLogout} className="font-bold text-md text-slate-900 cursor-pointer pr-12">logout</a>
+            <CardTitle title="Events Dashbord" />
+            <Link 
+              href={""}
+              onClick={onClickLogout}
+              className="font-bold text-md text-slate-900 cursor-pointer pr-12">
+              logout
+            </Link>
           </div>
           <div className="px-4 py-2 flex flex-col items-start justify-between">
             <div className="flex flex-row items-baseline justify-start">
-              <label className="font-bold text-2xl text-slate-900 pr-2">Hello mr/mrs: </label>
-              <label className="font-bold text-xl text-gray-700">{user?.name}</label>
+              <TitleAndValue
+                value={userName}
+                title="Hello mr/mrs:"
+                classNameTitle="pr-2" 
+              />
             </div>
-            <RoundedButton
+            <RoundedFilledButton
               onClick={onClickCreateNew}
-              additionalStyles="p-4 bg-teal-500 self-end rounded-full text-white font-bold text-xl"
+              className="p-4 bg-teal-500 self-end rounded-full text-white font-bold text-xl"
             >
               Create New
-            </RoundedButton>
+            </RoundedFilledButton>
           </div>
           <StackedNavigation
             tabs={eventStatuses}
@@ -45,31 +78,58 @@ export default class EventDashbord extends Component
             onSelect={onSelectEventStatus}
           />
         </div>
-        <RoundedCard paddingValue={8} className="bg-slate-100 overflow-auto h-calc-vf-294">
-          <RoundedCard paddingValue={8} className="grid grid-cols-3 gap-8 bg-white rounded-lg overflow-y-auto">
-            {upComingEvents && upComingEvents.length > 0 && 
-              upComingEvents.map(event => (
-                <EventCard
-                  eventName={event.name}
-                  calendlyLink={event.calendly_link}
-                  eventCreatedAt={event.created_at}
-                  eventExpiryDate={event.expiry_date}
-                  eventLocation={event.third_parity_name}
+        <RoundedCard
+          paddingValue={8}
+          className="bg-slate-100 overflow-auto h-calc-vh-294 overflow-y-auto overflow-x-hidden"
+        >
+          <RoundedCard 
+            paddingValue={8} 
+            className={` bg-white rounded-lg overflow-y-auto ${
+              isEventsLoading || areEventsNotFound? 'h-full flex flex-row items-center justify-center' : 'grid grid-cols-2 gap-8'
+            }`}
+          >
+            {isEventsLoading?
+              <Image
+                width={50}
+                height={43}
+                alt="loading..."
+                src="/128X43/loadingCircles.gif"
+              />
+              : areEventsNotFound?
+                <ContentNotFound
+                  message="Events not found"
                 />
-              ))
-            }
-            {/* When peding events selected upcoming events cleared and vice-versa, to keep them updated*/}
-            {pendingEvents && pendingEvents.length > 0 && 
-              pendingEvents.map(event => (
-                <EventCard
-                  eventName={event.name}
-                  calendlyLink={event.calendly_link}
-                  eventCreatedAt={event.created_at}
-                  onClickDelete={onClickDeleteEvent}
-                  eventExpiryDate={event.expiry_date}
-                  eventLocation={event.third_parity_name}
-                />
-              ))
+              :
+              (
+                upComingEvents && upComingEvents.length > 0 ?
+                upComingEvents.map((event, index) => (
+                  <EventCard
+                    key={index}
+                    eventId={event.id}
+                    eventName={event.name}
+                    eventCreatedAt={event.created_at}
+                    eventExpiryDate={event.expire_at}
+                    onClick={onClickUpcomingEventCard}
+                    attendeeEmail={event.attendee?.email}
+                    eventLocation={event.third_party_name}
+                  />
+                ))
+                :
+                pendingEvents && pendingEvents.length > 0 && 
+                  pendingEvents.map((event, index) => (
+                  <EventCard
+                    key={index}
+                    eventId={event.id}
+                    eventName={event.name}
+                    onClick={onClickPendingEventCard}
+                    eventCreatedAt={event.created_at}
+                    eventExpiryDate={event.expire_at}
+                    calendlyLink={event.calendly_link}
+                    onClickDelete={onClickDeleteEvent}
+                    eventLocation={event.third_party_name}
+                  />
+                ))
+              )
             }
           </RoundedCard>
         </RoundedCard>

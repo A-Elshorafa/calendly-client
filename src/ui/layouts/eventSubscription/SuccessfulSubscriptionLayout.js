@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import { RoundedCard } from "@/ui/components/cards";
-import Image from "next/image";
+import {RoundedCard} from "@/ui/components/cards";
+import { CardTitle, IconAndValue } from "@/ui/components/label";
 
 export default class SuccessfulSubscriptionLayout extends Component
 {
@@ -8,44 +8,54 @@ export default class SuccessfulSubscriptionLayout extends Component
     const {
       hostName,
       eventName,
-      calendlyLink,
-      eventDateTime,
-      thirdPartyName,
-      thirdPartyLink,
-      authorizationLink
+      emailAccounts,
+      subscriptionFullDateAndTime
     } = this.props;
     return (
       <div className="flex items-center justify-center py-8 bg-gray-400 h-full">
         <RoundedCard paddingValue={14} className="w-5/12 h-fit flex flex-col items-center p-8 rounded-xl bg-white">
-          <label className="text-xl font-bold text-slate-600">Successful Event Subscription</label>
-          <p className="text-xl font-semibold text-slate-600 mt-2 text-center">
-            You are Successfully Subscriped with<span className="font-bold">&nbsp;{hostName}&nbsp;</span>on
-            <span className="font-bold">&nbsp;{eventName}&nbsp;</span>event
-          </p>
-          <div className="flex flex-col items-center justify-center mt-8">
-            <label className="text-md font-bold text-slate-600">{eventName}</label>
-            <div className="flex flex-row items-center">
-              <Image
-                alt=""
-                width={24}
-                height={24}
-                src="/19X19/grayCalender19.svg"
+          <div className="flex flex-col items-center px-14 w-full overflow-hidden">
+            <CardTitle title="Successful Event Subscription" />
+            <p 
+              className="w-full self-center text-md text-slate-500 text-center text-ellipsis whitespace-nowrap overflow-hidden font-semibold mt-2 border-b-2 border-solid border-gray-200"
+            >
+              You are Successfully Subscriped with<span className="ml-2 font-bold tex-lg text-slate-600">{hostName}</span>
+            </p>
+            <div className="w-full flex flex-col items-start justify-center">
+              <IconAndValue
+                imgWidth={28}
+                imgHeight={28}
+                text={eventName}
+                iconSrc="/48X48/filledCircleBlue48.svg"
               />
-              <label className="text-md text-gray-700 ml-2">{eventDateTime}</label>
+              <IconAndValue
+                imgWidth={24}
+                imgHeight={24}
+                marginTopValue={4}
+                text={subscriptionFullDateAndTime}
+                iconSrc="/19X19/grayCalender19.svg"
+              />
+              <IconAndValue
+                marginTopValue={4}
+                inOneValueLine={false}
+                iconSrc="/16X16/videoCam16.svg"
+                text="Web Conferencing details to follow"
+              />
+              <IconAndValue
+                imgWidth={24}
+                imgHeight={24}
+                marginTopValue={4}
+                text={emailAccounts}
+                inOneValueLine={false}
+                textClassName="text-start"
+                iconSrc="/19X19/grayCalender19.svg"
+              />
+              <p
+                className="mt-8 self-center font-semibold text-lg text-ellipsis text-black whitespace-nowrap overflow-hidden"
+              >
+                A calender invitation has been sent to your email address.
+              </p>
             </div>
-          </div>
-          <div className="flex flex-col items-center mt-8">
-            <label className="text-lg text-gray-700 font-semibold">Here's your {thirdPartyName} link:</label>
-            {thirdPartyLink?
-              <a className="text-lg text-gray-500" href={thirdPartyLink}>{thirdPartyLink}</a>:
-              <label>Sorry you should authorized to {thirdPartyName} to get event link
-                <a className="text-lg text-gray-500" href={authorizationLink}>{thirdPartyLink}</a>
-              </label>
-            }
-          </div>
-          <div className="flex flex-col items-center mt-8">
-            <label className="text-lg text-gray-700 font-semibold">Here's your calendly link:</label>
-            <a className="text-lg text-gray-500" href={calendlyLink}>{calendlyLink}</a>
           </div>
         </RoundedCard>
       </div>
