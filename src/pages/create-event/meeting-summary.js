@@ -1,21 +1,18 @@
-import React, { Component } from "react";
-import { MeetingSummaryLayout } from "@/ui/Layouts";
+import { observer } from "mobx-react";
+import React, {Component} from "react";
+import MeetingSummaryView from "@/views/eventCreation/MeetingSummaryView";
 
-export default class MeetingSummary extends Component
+class MeetingSummary extends Component
 {
   render() {
     return (
-      <MeetingSummaryLayout
-        duration={30}
-        userName="Abdelrahman"
-        numberOfDays={3}
-        numberOfTimes={15}
-        allowContinue={false}
-        onClickContinue={() => {}}
-        onChangeCustomUrl={() => {}}
-        onChangeMeetingName={() => {}}
-        onChangeMeetingAgenda={() => {}}
+      <MeetingSummaryView 
+        userStore={this.props.rootStore.userStore}
+        eventStore={this.props.rootStore.eventStore}
+        {...this.props}
       />
     )
   }
 }
+
+export default observer(MeetingSummary);

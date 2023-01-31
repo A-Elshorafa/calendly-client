@@ -1,30 +1,18 @@
-import axios from "../apis/axios";
-import { useRouter } from 'next/router';
+import { Login } from "@/apis";
+import pages from "@/constants/pages";
 import React, { useState } from "react";
 import { LoginLayout } from "../ui/Layouts";
-import endpoints from "../constants/endpoints";
 
-const Login = _ => {
+export default ({axios, router}) => {
   const [errors, setErrors] = useState([]);
-  const router = useRouter();
   const handleSubmit = (event, payload) => {
     event.preventDefault();
-    
-    const {email, password} = payload;
-    axios.get(endpoints.csrf);
-    axios.post(endpoints.login, {email, password}).then( response => {
-      if (response && response.data && response.data.success) {
-        router.push('/');
+
+    Login(response => {
+      if (response.success) {
+        router.push(pages.EVENTS_DASHBORAD);
       }
-    }).catch(e => {
-      console.log(e)
-      if (e &&
-        e.response &&
-        e.response.data &&
-        e.response.data.errors) {
-          setErrors(e.response.data.errors);
-        }
-    })
+    }, payload, axios, setErrors)
   };
 
   return (
@@ -34,5 +22,3 @@ const Login = _ => {
     />
   );
 };
-
-export default Login;
