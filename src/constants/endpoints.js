@@ -11,10 +11,13 @@ const endpoints = {
   getAuthUserInfo: url.concat("/api/getAuthUserInfo"),
   //events\\
   storeEvent: url.concat("/api/storeEvent"),
+  deleteEvent: url.concat("/api/deleteEvent"),
   pendingEvents: url.concat("/api/getPendingEvents"),
-  getEventDetails: url.concat("/api/getEventDetails"),
   upcomingEvents: url.concat("/api/getUpComingEvents"),
-  subscribeToEvent: url.concat("/api/subscribeToEvent")
+  updateEventNotes: url.concat("/api/updateEventNotes"),
+  subscribeToEvent: url.concat("/api/subscribeToEvent"),
+  getPendingEventDetails: url.concat("/api/getPendingEventDetails"),
+  getUpcomingEventDetails: url.concat("/api/getUpcomingEventDetails"),
 }
 
 export default endpoints;

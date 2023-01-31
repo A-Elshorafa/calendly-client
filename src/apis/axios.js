@@ -17,14 +17,15 @@ class Axios {
     this.instance.interceptors.response.use(
       response => response,
       error => {
-        if (error) {
+        if (error && error.response) {
           const { status } = error.response
           // 401 unauthenicated user
           // 419 Handle Token Timeouts
           if ([401, 419].includes(status)) {
             const paths = window.location.href.split('/');
             const isInHome = ['', 'login', 'register'].includes(paths[paths.length-1])
-            if(!isInHome) {
+            const isInSubScriptionFlow = paths.includes('event-subscription');
+            if(!isInHome && !isInSubScriptionFlow) {
               this.router.push('/login')
             }
           }

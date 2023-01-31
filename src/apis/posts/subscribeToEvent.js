@@ -1,9 +1,13 @@
 import endpoints from "../../constants/endpoints";
 
-export default (callback, subscriptionData, axios) => {
+export default (callback, errorCallback, subscriptionData, axios) => {
   axios.post(endpoints.subscribeToEvent, subscriptionData).then(response => {
-    if (response && response.data) {
+    if (response?.data) {
       callback(response.data);
     }
-  }).catch(_ => {})
+  }).catch(e => {
+    if (e?.response) {
+      errorCallback()
+    }
+  })
 }
