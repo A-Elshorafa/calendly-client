@@ -104,13 +104,20 @@ class EventStoreClass
     const ACTIONS = {PUSH: 0, DEL: 1};
     const {value, objectFounded, dateIndex, timeIndex, ACTION} = actionObject;
     if (ACTION === ACTIONS.DEL) {
-      this.selectedAvailableDatesAndTimes[dateIndex]['times'].splice(timeIndex, ACTIONS.DEL);
+      // remove entire object (date, times) if it the last time in it.
+      if (this.selectedAvailableDatesAndTimes[dateIndex]['times'].length === 1) {
+        this.selectedAvailableDatesAndTimes.splice(dateIndex, ACTIONS.DEL);  
+      } else {
+        this.selectedAvailableDatesAndTimes[dateIndex]['times'].splice(timeIndex, ACTIONS.DEL);
+      }
+    // will push a time in a sorted place
     } else if (dateIndex !== -1 && objectFounded) {
       if (timeIndex === -1) {
         this.selectedAvailableDatesAndTimes[dateIndex]['times'].push(value);
       } else {
         this.selectedAvailableDatesAndTimes[dateIndex]['times'].splice(timeIndex, ACTIONS.PUSH, value);
       }
+    // will push new object (date and times) in a sorted place
     } else if (dateIndex !== -1 && !objectFounded) {
       this.selectedAvailableDatesAndTimes.splice(dateIndex, ACTIONS.PUSH, value);
     }  else {
