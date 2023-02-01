@@ -1,6 +1,7 @@
 import { toJS } from "mobx";
 import moment from "moment/moment";
 import { observer } from "mobx-react";
+import pages from "@/constants/pages";
 import React, { Component } from "react";
 import {SelectAvaiableDatesLayout}  from '@/ui/layouts';
 
@@ -22,11 +23,17 @@ class SelectAvaiableDatesView extends Component {
   }
 
   componentDidMount() {
-    const {router, userStore} = this.props;
-    if (userStore.id === "") {
+    const {router, userStore, eventStore} = this.props;
+    if (userStore.id === -1) {
       router.replace('/events-dashboard');
     }
+    router.beforePopState(({url}) => {
+      if (url !== pages.SELECT_AVAILABLE_DATES && url !== pages.MEETING_DETAILS) {
+        eventStore.clearData();
+      }
 
+      return true;
+    })
     this.getCurrentMonthDays();
   }
 
@@ -39,11 +46,11 @@ class SelectAvaiableDatesView extends Component {
     const {
       setSelectedDuration,
       selectedAvailableDatesAndTimes,
-      setSelectedAvailableDatesAndTimes
+      clearSelectedAvailableDatesAndTimes
     } = this.props.eventStore;
 
     if (selectedAvailableDatesAndTimes.length !== 0) {
-      setSelectedAvailableDatesAndTimes([]);
+      clearSelectedAvailableDatesAndTimes();
     }
     setSelectedDuration(duration);
     this.getFilteredDates()
@@ -55,15 +62,8 @@ class SelectAvaiableDatesView extends Component {
   }
 
   handleSelectDate(object) {
-    const {
-      setSelectedDates,
-      selectedAvailableDatesAndTimes,
-      setSelectedAvailableDatesAndTimes
-    } = this.props.eventStore;
+    const {setSelectedDates} = this.props.eventStore;
 
-    if (selectedAvailableDatesAndTimes.length !== 0) {
-      setSelectedAvailableDatesAndTimes([]);
-    }
     setSelectedDates(object);
     this.getFilteredDates()
   }
@@ -77,11 +77,11 @@ class SelectAvaiableDatesView extends Component {
     const {
       setHoursRangeTo,
       selectedAvailableDatesAndTimes,
-      setSelectedAvailableDatesAndTimes
+      clearSelectedAvailableDatesAndTimes
     } = this.props.eventStore;
 
     if (selectedAvailableDatesAndTimes.length !== 0) {
-      setSelectedAvailableDatesAndTimes([]);
+      clearSelectedAvailableDatesAndTimes();
     }
     setHoursRangeTo(value);
     this.getFilteredDates();
@@ -91,11 +91,11 @@ class SelectAvaiableDatesView extends Component {
     const {
       setHoursRangeFrom,
       selectedAvailableDatesAndTimes,
-      setSelectedAvailableDatesAndTimes
+      clearSelectedAvailableDatesAndTimes
     } = this.props.eventStore;
 
     if (selectedAvailableDatesAndTimes.length !== 0) {
-      setSelectedAvailableDatesAndTimes([]);
+      clearSelectedAvailableDatesAndTimes();
     }
     setHoursRangeFrom(value);
     this.getFilteredDates();
@@ -131,33 +131,32 @@ class SelectAvaiableDatesView extends Component {
     if (selectedDates && selectedDuration.value && hoursRangeFrom && hoursRangeTo) {
       let startDate = "";
       let compositeTime = "";
-      // from: 9am to:5pm as default with iso will +2
-      let from = hoursRangeFrom !==-1 ? parseInt(hoursRangeFrom) : 9;
-      let to = hoursRangeTo !== -1? parseInt(hoursRangeTo) : 17;
-      to = to < 10? "0".concat(to) : to;
-      from = from < 10? "0".concat(from) : from;
+      // from: 9am to:5pm as default
+      const to = hoursRangeTo < 10? "0".concat(hoursRangeTo) : hoursRangeTo;
+      const from = hoursRangeFrom < 10? "0".concat(hoursRangeFrom) : hoursRangeFrom;
+
+      // how many durations between from and to times
+      // add 1 duration to get the exact "to" time, excpet it to 24 don't add it
       const durationInMinutes = (to - from) * 60;
-      const numberOfDurations = (durationInMinutes / selectedDuration.value) + 1; // to add the end(to) time
-      let generatedTimes = [];
+      const numberOfDurations = (durationInMinutes / selectedDuration.value) + (to === "24" ? 0 : 1); 
+
+      // intialize final value array
       const filteredDatesAndTimes = [];
-      const currentMinuteInDuration = (Math.ceil(moment().minute() / 15) % 4);
-      let startMinutes = currentMinuteInDuration * selectedDuration.value;
-      startMinutes = startMinutes > 12 ? startMinutes : "0".concat(startMinutes)
       selectedDates.forEach(date => {
-        if (moment(date.concat(`T${from}:${startMinutes}:00Z`)).isSameOrBefore(moment())) {
-          // handle iso date form
-          startDate = moment(`${date} ${from}:${startMinutes}:00`, "YYYY-MM-DD kk:mm:ss", true);
-        } else {
-          startDate = moment(`${date} ${from}:00:00`, "YYYY-MM-DD kk:mm:ss", true)
-        }
-        generatedTimes = [];
+        // get start from date & time
+        startDate = moment(`${date} ${from}`, "YYYY-MM-DD kk", true)
+        
+        // get next times from the start date and add duraions
+        // only future times returned
+        const generatedTimes = [];
         for(let t=0; t < numberOfDurations; t++) {
-          const duration = t === 0? 0 : selectedDuration.value;
+          // don't add duration first time to get the exact from
+          const duration = t===0? 0 : selectedDuration.value;
           compositeTime = startDate.add(duration, 'minutes').format('HH:mm:ss')
           const isoFormat = date.concat('T', compositeTime, '+02:00');
           // only in the future dates
           if (moment().isSameOrBefore(moment(isoFormat)))
-            generatedTimes.push(compositeTime);
+            generatedTimes.push({time: compositeTime});
           }
         filteredDatesAndTimes.push({date: date, times: generatedTimes})
       })
@@ -174,6 +173,7 @@ class SelectAvaiableDatesView extends Component {
       availableDatesAndTimes,
       selectedAvailableDatesAndTimes
     } = this.props.eventStore;
+
     return (
       <SelectAvaiableDatesLayout
         dates={this.state.monthDays}
@@ -197,7 +197,7 @@ class SelectAvaiableDatesView extends Component {
         filteredDates={
           selectedDuration.value !== -1 ||
           selectedDates.length !== 0 ?
-            availableDatesAndTimes : []
+          availableDatesAndTimes : []
         }
       />
     )

@@ -11,6 +11,10 @@ body {
     height: 100%;
 }
 
-.h-calc-vf-294 {
+.h-calc-vh-294 {
     height: calc(100vh - 294px);
+}
+
+.h-calc-vh-76 {
+    height: calc(100vh - 76px);
 }

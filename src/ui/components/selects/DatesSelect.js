@@ -73,10 +73,13 @@ export default class MultipleValueSelect extends Component {
 
   render() {
     const {isSelectedState} = this.state;
-    const {values, title, className, selectedValues} = this.props;
+    const {values, title, subTitle, className, selectedValues} = this.props;
     return (
       <div className={className}>
-        <label id="listbox-label" className="block text-lg text-gray-700 font-bold">{title}</label>
+        <div className="flex flex-col">
+          <label className="text-lg text-gray-700 font-bold">{title}</label>
+          <span className="text-sm text-gray-500">{subTitle}</span>
+        </div>
           <div className="relative mt-1">
           <SelectHeaderComponent
             onClick={this.handleOnClickHeader}

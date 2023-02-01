@@ -32,7 +32,7 @@ export default class EventDashbordLayout extends Component
     } = this.props;
     return (
       <div className="w-full h-full-screen overflow-hidden relative">
-        {deleteModalMessage !=='' &&
+        {modalType && deleteModalMessage !=='' &&
           <CustomModal
             cancelText="Cancel"
             title="Delete Event"

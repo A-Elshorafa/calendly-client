@@ -5,12 +5,32 @@ import { SuccessfulCreationLayout } from "@/ui/Layouts";
 
 class SuccessfulCreationView extends Component
 {
-  componentDidMount() {
-    const {router, userStore} = this.props;
-    if (userStore.id === "") {
-      router.replace('/events-dashboard');
-    }
+  constructor(props) {
+    super(props);
+    
     this.handleRouting = this.handleRouting.bind(this);
+  }
+
+  componentDidMount() {
+    const {router, eventStore} = this.props;
+    if (eventStore.eventName === "") {
+      eventStore.clearData()
+    }
+
+    router.beforePopState(({url}) => {
+      if (url !== pages.SUCCESSFUL_CREATION) {
+        window.location.href = pages.EVENTS_DASHBORAD;
+      }
+      return true;
+    })
+  }
+
+  // on refresh the page
+  componentDidUpdate() {
+    const {eventStore} = this.props;
+    if (eventStore.eventName === "") {
+      this.handleRouting(pages.EVENTS_DASHBORAD);
+    }
   }
 
   handleRouting(url) {
@@ -24,10 +44,9 @@ class SuccessfulCreationView extends Component
     return (
       <SuccessfulCreationLayout
         eventName={eventStore.eventName}
-        dashboardLink={pages.dashboardLink}
-        calendlyLink={eventStore.calendlyUrl}
-        goToDashoard={()=>this.handleRouting(pages.dashboardLink)}
-        onClickCalendly={()=>this.handleRouting(eventStore.calendlyUrl)}
+        calendlyLink={eventStore.calendlyLink}
+        goToDashoard={()=>this.handleRouting(pages.EVENTS_DASHBORAD)}
+        onClickCalendly={()=>this.handleRouting(eventStore.calendlyLink)}
       />
     )
   }

@@ -78,8 +78,9 @@ export default class SelectAvaiableDatesLayout extends Component
                 values={dates}
                 className="w-full flex-1"
                 onSelectValue={onSelectDate}
-                title="Select All Available Days"
                 selectedValues={selectedDates}
+                title="Select All Available Days"
+                subTitle="choose from next month days"
                 openedSelectTitle={this.state.openedSelectTitle}
                 onChangeAppereance={this.handleChangeSelectedComponent}
               />
