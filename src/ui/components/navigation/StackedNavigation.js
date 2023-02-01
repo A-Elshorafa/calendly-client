@@ -12,7 +12,7 @@ export default ({tabs, onSelect, stackName}) => {
     <nav className="flex flex-row items-center justify-between px-8 border-t-2">
       {tabs.map((element, index) => {
           return (
-            <div key={index} className="w-full flex flex-col items-center p-8 mr-4 last-of-type:mr-0">
+            <div key={index} className="w-full flex flex-col items-center px-8 py-6 mr-4 last-of-type:mr-0">
               <div className="align-center">
                 <input 
                   className="hidden" 

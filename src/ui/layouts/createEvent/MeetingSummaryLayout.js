@@ -94,7 +94,7 @@ export default class MeetingSummary extends Component
                     width={24}
                     height={24}
                     className="ml-2 my-2" //todo: find better way to handle input padding (with left component) automatically
-                    src="//assets.calendly.com/assets/frontend/media/zoom-dd4ce5bef905d2b74c0a.svg"
+                    src="http://assets.calendly.com/assets/frontend/media/zoom-dd4ce5bef905d2b74c0a.svg"
                   />
                 )}
               />

@@ -50,11 +50,11 @@ export default class PendingEventDetailsLayout extends Component
           <div className="flex flex-row h-full mt-4 overflow-hidden">
             <div className="flex flex-1 flex-col flex-no-wrap overflow-hidden h-full">
               <IconAndValue
-                marginTopValue={0}
                 title="Created At"
+                marginTopValue={0}
                 text={`${createdAtDate}`}
                 iconSrc="/19X19/grayCalender19.svg"
-                componentBesideHeader={
+                componentBesideTitle={
                   <LinkAndDeleteComponent
                     link={calendlyLink}
                     iconWidth={22}

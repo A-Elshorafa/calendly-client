@@ -49,7 +49,10 @@ export default class EventDashbordLayout extends Component
         }
         <div className="border border-spacing-1 w-full drop-shadow-xl bg-gray-100">
           <div className="p-4 flex flex-row items-center justify-between">
-            <CardTitle title="Events Dashbord" />
+            <CardTitle
+              textPosition="start"
+              title="Events Dashbord"
+            />
             <Link 
               href={""}
               onClick={onClickLogout}
@@ -57,17 +60,17 @@ export default class EventDashbordLayout extends Component
               logout
             </Link>
           </div>
-          <div className="px-4 py-2 flex flex-col items-start justify-between">
-            <div className="flex flex-row items-baseline justify-start">
-              <TitleAndValue
-                value={userName}
-                title="Hello mr/mrs:"
-                classNameTitle="pr-2" 
-              />
-            </div>
+          <div className="px-4 py-2 flex flex-row items-baseline justify-between">
+            <TitleAndValue
+              value={userName}
+              title="Hello mr/mrs:"
+              classNameValue="ml-2"
+              classNameTitle="overflow-visible"
+              className="w-fit flex flex-row items-center justify-between"
+            />
             <RoundedFilledButton
               onClick={onClickCreateNew}
-              className="p-4 bg-teal-500 self-end rounded-full text-white font-bold text-xl"
+              className="p-4 bg-teal-500 rounded-full text-white font-bold text-xl"
             >
               Create New
             </RoundedFilledButton>

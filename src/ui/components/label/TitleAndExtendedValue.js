@@ -3,7 +3,6 @@ import React from "react";
 export default ({
   title,
   value,
-  className,
   classNameTitle,
   classNameValue,
   marginTopValue = 2,
@@ -11,10 +10,10 @@ export default ({
   valueTextSize="lg"
 }) => {
   return (
-    <div className={`mt-${marginTopValue} ${className}`}>
-      <h1 className={`text-${titleTextSize} ${
+    <>
+      <h1 className={`text-${titleTextSize} mt-${marginTopValue} ${
         classNameTitle
-        } text-slate-700 w-full overflow-hidden whitespace-nowrap text-ellipsis font-semibold`}
+        } text-slate-700 whitespace-nowrap text-ellipsis overflow-hidden font-semibold`}
       >
         {title}
       </h1>
@@ -22,10 +21,10 @@ export default ({
         classNameValue
         } text-${
           valueTextSize
-        } font-semibold text-slate-500 w-full overflow-hidden whitespace-nowrap text-ellipsis`}
+        } font-semibold text-slate-500 w-full overflow-y-auto overflow-x-hidden text-ellipsis`}
       >
         {value}
       </p>
-    </div>
+    </>
   )
 }

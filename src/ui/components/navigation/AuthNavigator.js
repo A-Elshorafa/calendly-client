@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
 
-export default ({Component, pageProps}) => {
+export default ({children}) => {
   return (
-    <>
+    <div className="overflow-hidden">
       <nav className="rounded bg-indigo-900 text-white px-2 py-2.5 sm:px-4">
       <div
         className="container mx-auto flex flex-wrap items-center justify-between"
@@ -51,7 +51,7 @@ export default ({Component, pageProps}) => {
         </div>
       </div>
     </nav>
-    <Component {...pageProps} />
-  </>
+    {children}
+  </div>
   )
 }

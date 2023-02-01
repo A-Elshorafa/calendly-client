@@ -1,12 +1,22 @@
 import React from "react";
 
 export default ({
+  onClick,
   children,
+  allowClick,
   className="",
-  paddingValue = 4 
+  roundedSize = '',
+  paddingValue = 4,
 }) => {
   return (
-    <div className={`p-${paddingValue} rounded ${className}`}>
+    <div 
+      onClick={allowClick? onClick : null} 
+      className={`overflow-hidden p-${paddingValue
+        } rounded${roundedSize? `-${roundedSize}` : ``
+        } ${allowClick? 'cursor-pointer' : ''
+        } ${className}`
+      }
+    >
       {children}
     </div>
   )
