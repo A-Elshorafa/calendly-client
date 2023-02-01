@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { RoundedCard } from "@/ui/components/cards";
-import Image from "next/image";
+import { CardTitle, LabeledButton } from "@/ui/components/label";
 
 export default class SuccessfulCreationLayout extends Component
 {
@@ -8,29 +8,35 @@ export default class SuccessfulCreationLayout extends Component
     const {
       eventName,
       calendlyLink,
-      eventDateTime
+      goToDashoard,
+      onClickCalendly
     } = this.props;
     return (
       <div className="flex items-center justify-center py-8 bg-gray-400 h-full">
-        <RoundedCard paddingValue={14} className="w-5/12 h-fit flex flex-col items-center p-8 rounded-xl bg-white">
-          <label className="text-xl font-bold text-slate-600">Successful Event Creation</label>
-          <p className="text-xl font-semibold text-slate-600 mt-2 text-center">You are Successfully created a new event</p>
+        <RoundedCard
+          paddingValue={14}
+          className="w-5/12 h-fit flex flex-col items-center p-8 rounded-xl bg-white"
+        >
+          <CardTitle text="Successful Event Creation"/>
+          <p className="text-xl font-semibold text-slate-600 mt-2 text-center">
+            You are Successfully created a new event
+          </p>
           <div className="flex flex-col items-center justify-center mt-8">
-            <label className="text-md font-bold text-slate-600">{eventName}</label>
-            <div className="flex flex-row items-center">
-              <Image
-                alt=""
-                width={24}
-                height={24}
-                src="/19X19/grayCalender19.svg"
-              />
-              <label className="text-md text-gray-700 ml-2">{eventDateTime}</label>
-            </div>
+            <label className="text-3xl font-bold text-slate-600">
+              {eventName}
+            </label>
           </div>
-          <div className="flex flex-col items-center mt-8">
-            <label className="text-lg text-gray-700 font-semibold">Here's your calendly link:</label>
-            <a className="text-lg text-gray-500" href={calendlyLink}>{calendlyLink}</a>
-          </div>
+          <LabeledButton
+            onClick={onClickCalendly}
+            buttonText={calendlyLink}
+            title="Here's your calendly link:"
+          />
+          <button
+            onClick={goToDashoard}
+            className="mt-4 text-blue-700 font-semibold"
+          >
+            Go back to dashboard
+          </button>
         </RoundedCard>
       </div>
     )

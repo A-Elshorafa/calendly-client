@@ -1,102 +1,100 @@
-import Image from "next/image";
-import React, { Component } from "react";
-import { SelectsButton } from "../buttons";
+import moment from "moment";
+import React, { Component} from "react";
+import MultipleSelectCore from "./partials/MultipleSelectCore";
+import SelectHeaderComponent from "./partials/SelectHeaderComponent";
 
-export default class DatesSelect extends Component {
+export default class MultipleValueSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValues: [],
       isSelectedState: false,
-      selectedValuesString: [],
+      selectedValuesString: "",
+    }
+
+    this.getSelectedString = this.getSelectedString.bind(this);
+    this.handleSelectValue = this.handleSelectValue.bind(this);
+    this.handleOnClickHeader = this.handleOnClickHeader.bind(this);
+  }
+
+  componentDidMount() {
+    // get the values string if the initial values not empty
+    if (this.props.selectedValues !== []) {
+      this.getSelectedString();
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // to ensure selected dates updated
-    if (prevState.selectedValues !== this.state.selectedValues) {
-      this.props.onSelectDate(this.state.selectedValues);
-      this.setState({selectedValuesString: this.getSelectedString()})
+  componentDidUpdate(prevProp) {
+    const {name, openedSelectTitle, selectedValues} = this.props;
+    // sync with another selects on the same page
+    if (openedSelectTitle !== prevProp.openedSelectTitle && openedSelectTitle !== name) {
+      this.setState({isSelectedState: false});
     }
-  }
-
-  handleSelectDateTime(date, time) {
-    const value = {date, time};
-    const elementIndex = 
-      this.state.selectedValues.findIndex(ele => ele.date===date && ele.time === time);
-    if (elementIndex === -1) {
-      const currentValue = this.state.selectedValues.filter(_ => true);
-      currentValue.push(value);
-      this.setState({selectedValues: currentValue});
+    // updated selected data string state when props changed
+    if (selectedValues.length !== prevProp.selectedValues.length && selectedValues.length !== 0) {
+      this.getSelectedString()
+    }
+  };
+  
+  handleSelectValue(value) {
+    const ACTIONS = {PUSH: 0, SUBTRACT: 1};
+    const {selectedValues, onSelectValue} = this.props;
+    
+    const elementIndex = selectedValues.indexOf(value);
+    const ACTION = elementIndex === -1?  ACTIONS.PUSH :  ACTIONS.SUBTRACT;
+    
+    if (ACTION === ACTIONS.PUSH) {
+      const pushIndex = selectedValues.findIndex(ele => moment(value).isBefore(moment(ele)));
+      
+      onSelectValue({value, elementIndex: pushIndex, ACTION: ACTIONS.PUSH})
     } else {
-      const oldValue = this.state.selectedValues.filter(_ => true);
-      oldValue.splice(elementIndex, 1);
-      this.setState({selectedValues: oldValue});
+      onSelectValue({value, elementIndex, ACTION: ACTIONS.SUBTRACT})
     }
+    this.getSelectedString()
+  }
 
-    this.getSelectedString();
+  handleOnClickHeader() {
+    this.setState({isSelectedState: !this.state.isSelectedState});
+    this.props.onChangeAppereance(this.props.name);
   }
 
   getSelectedString() {
-    let value = "";
-    value = this.state.selectedValues.slice(0, 3).reduce((accumulator, current, index) => {
-      const dateTimeString = current.date.concat(' ', current.time);
-      console.log('datetime: ', dateTimeString);
-      return accumulator.concat(index !==0 ?", " : "", dateTimeString);
-    }, "")
-    if (this.state.selectedValues.length > 3) {
-      value = value + ' ...'
-    }
+    let valueString = "";
+    const {selectedValues} = this.props;
 
-    return value;
+    valueString = selectedValues.slice(0, 5).reduce((accumulator, current, index) =>
+      accumulator.concat(index !==0 ?", " : "", current),"")
+
+    if (selectedValues.length > 5) {
+      valueString = valueString + ' ...'
+    }
+    
+    this.setState({selectedValuesString: valueString});
   }
 
   render() {
-    const {dates, label, className} = this.props;
+    const {isSelectedState} = this.state;
+    const {values, title, subTitle, className, selectedValues} = this.props;
     return (
       <div className={className}>
-        <label id="listbox-label" className="block text-lg text-gray-700 font-bold">{label}</label>
-        <div className="relative mt-1">
-          <button onClick={()=>{this.setState({isSelectedState: !this.state.isSelectedState})}} type="button" className="relative w-full cursor-default rounded-md border border-gray-300 bg-white px-4 py-6 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-            <div className="flex flex-row items-center justify-between w-full absolute inset-y-0 left-0 px-2 overflow-hidden text-ellipsis">
-              <label className="text-lg aria-checked:font-bold aria-checked:text-blue-600 whitespace-nowrap text-ellipsis" aria-checked={this.state.selectedValuesString !== ""}>{this.state.selectedValuesString}</label>
-              {this.state.isSelectedState?
-                <Image
-                  alt=""
-                  width={16}
-                  height={16}
-                  src="/16X16/grayArrowUp16.svg"
-                /> :
-                <Image
-                  alt=""
-                  width={16}
-                  height={16}
-                  src="/16X16/grayArrowDown16.svg"
-                />
-              }
-            </div>
-          </button>
-        {this.state.isSelectedState &&
-          <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
-            {dates && dates.length > 0 && dates.map(date => (
-              <li key={date.value} className="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9">
-                <div className="border-b-2 text-lg border-gray-400">{date?.value}</div>
-                <br/>
-                  {date.times && date.times.length > 0 && date.times.map((time, index) => (
-                   <SelectsButton
-                      key={index}
-                      value={time}
-                      isLastElement={index === date.times.length-1}
-                      onClick={() => this.handleSelectDateTime(date?.value, time)}
-                      isSelected={this.state.selectedValues.find(ele => ele.date===date?.value && ele.time === time) !== undefined}
-                    />
-                  ))}
-              </li>
-            ))}
-          </ul>
+        <div className="flex flex-col">
+          <label className="text-lg text-gray-700 font-bold">{title}</label>
+          <span className="text-sm text-gray-500">{subTitle}</span>
+        </div>
+          <div className="relative mt-1">
+          <SelectHeaderComponent
+            onClick={this.handleOnClickHeader}
+            textString={this.state.selectedValuesString}
+            isSelectedState={isSelectedState}
+          />
+          {isSelectedState &&
+            <MultipleSelectCore
+              values={values}
+              selectedValues={selectedValues}
+              onSelect={this.handleSelectValue}
+            />
           }
         </div>
       </div>
-    )
+    );
   }
 }

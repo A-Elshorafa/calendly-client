@@ -7,6 +7,7 @@ export default ({
   disabled,
   className,
   placeholder,
+  invalidText,
   onChangeText,
   leftComponent,
   isRequired=false
@@ -25,6 +26,7 @@ export default ({
           className={`${disabled? 'bg-grey-400 text-gray-700' : 'text-blue-700'} ${leftComponent? 'ml-2 rounded-l-none' :''} rounded-lg p-2 w-full text-xl`}
         />
       </div>
+      {invalidText !== "" && <span className="text-sm text-red-600 mt-2 pl-2">{invalidText}</span>}
     </div>
   )
 }

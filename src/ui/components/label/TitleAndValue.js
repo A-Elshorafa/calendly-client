@@ -4,16 +4,28 @@ export default ({
   title,
   value,
   className,
-  marginTopValue = 2
+  classNameTitle,
+  classNameValue,
+  marginTopValue = 2,
+  titleTextSize="lg",
+  valueTextSize="lg"
 }) => {
   return (
-    <>
-      <label className={`text-lg text-slate-700 font-semibold mt-${marginTopValue} ${className}`}>
+    <div className={`mt-${marginTopValue} ${className}`}>
+      <h1 className={`text-${titleTextSize} ${
+        classNameTitle
+        } text-slate-700 w-full overflow-hidden whitespace-nowrap text-ellipsis font-semibold`}
+      >
         {title}
-      </label>
-      <label className="font-semibold text-lg text-slate-500 ">
+      </h1>
+      <p className={`${
+        classNameValue
+        } text-${
+          valueTextSize
+        } font-semibold text-slate-500 w-full overflow-hidden whitespace-nowrap text-ellipsis`}
+      >
         {value}
-      </label>
-    </>
+      </p>
+    </div>
   )
 }
