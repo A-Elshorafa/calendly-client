@@ -29,4 +29,4 @@
   
   2- Enter localhost:3000
   
-  3- Start login with the seeder mail
+  3- Start login with the seeder email
