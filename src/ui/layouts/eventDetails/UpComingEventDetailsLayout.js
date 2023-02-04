@@ -4,7 +4,7 @@ import { CustomModal } from "@/ui/components/modals";
 import { LabeledTextArea } from "@/ui/components/inputs";
 import { RoundedFilledButton } from "@/ui/components/buttons";
 import { ImageLoader } from "@/ui/components/actionComponents";
-import { IconAndValue, TitleAndExtendedValue, TitleAndValue } from "@/ui/components/label";
+import { IconAndValue, TitleAndExtendedValue, TitleAndLink, TitleAndValue } from "@/ui/components/label";
 
 export default class UpComingEventDetailsLayout extends Component
 {
@@ -23,6 +23,7 @@ export default class UpComingEventDetailsLayout extends Component
       isScreenLoading,
       appointmentTime,
       thirdParityName,
+      attendeeThirdPartyLink,
       selectedAppointmentDate,
       appointmentTimePlusDuration
     } = this.props;
@@ -114,6 +115,16 @@ export default class UpComingEventDetailsLayout extends Component
                     value={attendeeEmail}
                     title="Attendee email:"
                   />
+                  {attendeeThirdPartyLink && 
+                    <TitleAndLink 
+                      marginTopValue={6}
+                      titleTextSize="md"
+                      valueTextSize="md"
+                      value={attendeeThirdPartyLink}
+                      title="Attendee Third Party Link:"    
+                      className="overflow-hidden"
+                      classNameValue="block w-full text-ellipsis overflow-hidden whitespace-nowrap"
+                    />}
                   {attendeeNotes && <TitleAndExtendedValue 
                     marginTopValue={6}
                     titleTextSize="md"

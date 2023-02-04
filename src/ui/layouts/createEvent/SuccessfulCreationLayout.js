@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { RoundedCard } from "@/ui/components/cards";
-import { CardTitle, LabeledButton } from "@/ui/components/label";
+import { CardTitle, TitleAndLink } from "@/ui/components/label";
 
 export default class SuccessfulCreationLayout extends Component
 {
@@ -9,7 +9,6 @@ export default class SuccessfulCreationLayout extends Component
       eventName,
       calendlyLink,
       goToDashoard,
-      onClickCalendly
     } = this.props;
     return (
       <div className="flex items-center justify-center py-8 bg-gray-400 h-full">
@@ -26,10 +25,14 @@ export default class SuccessfulCreationLayout extends Component
               {eventName}
             </label>
           </div>
-          <LabeledButton
-            onClick={onClickCalendly}
-            buttonText={calendlyLink}
+          <TitleAndLink
+            marginTopValue={6}
+            titleTextSize="md"
+            valueTextSize="md"
+            value={calendlyLink}
             title="Here's your calendly link:"
+            className="text-center"
+            classNameValue="w-full overflow-y-auto overflow-x-hidden text-ellipsis"
           />
           <button
             onClick={goToDashoard}
