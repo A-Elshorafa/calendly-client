@@ -60,7 +60,7 @@ export default class AppointmentSelectionLayout extends Component
             <div className="flex flex-1 flex-col pl-2">
               <label className="flex flex-col text-lg font-semibold text-slate-600">
                 Host's available times
-                <span className="text-sm text-gray-500">all times are on Europe/Istanbul</span>
+                <span className="text-sm text-gray-500">all times are on UTC</span>
               </label>
               <ColumnSelectValues
                 valueKey="date"

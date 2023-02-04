@@ -72,7 +72,7 @@ class EventsDashboardView extends Component {
     GetUpComingUserEvents(userId, (events) => {
       if (events?.length > 0) {
         const foramtedEvents = events.map(event => {
-          event.expire_at = moment(event.expire_at).format('YYYY-MM-DD HH:mm:ss');
+          event.expire_at = moment(event.expire_at).utc().format('YYYY-MM-DD HH:mm:ss');
           return event;
         })
         this.setState({
@@ -93,7 +93,7 @@ class EventsDashboardView extends Component {
     GetPendingUserEvents(userId, (events) => {
       if (events?.length > 0) {
         const foramtedEvents = events.map(event => {
-          event.expire_at = moment(event.expire_at).format('YYYY-MM-DD HH:mm:ss');
+          event.expire_at = moment(event.expire_at).utc().format('YYYY-MM-DD HH:mm:ss');
           return event;
         })
         this.setState({

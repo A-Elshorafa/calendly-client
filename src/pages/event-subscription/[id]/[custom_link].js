@@ -3,11 +3,12 @@ import AppointmentSelectionView from "@/views/eventSubscription/AppointmentSelec
 
 export default observer(props => {
   const {query} = props.router;
-  const {eventStore} = props.rootStore;
+  const {eventStore, attendeeStore} = props.rootStore;
   return (
     <AppointmentSelectionView
       query={query}
       eventStore={eventStore}
+      attendeeStore={attendeeStore}
       {...props}
     />
   )
