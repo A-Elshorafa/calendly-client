@@ -16,8 +16,10 @@ class AppointmentSelectionView extends Component
   }
 
   componentDidMount() {
-    const {axios, query, router, eventStore} = this.props;
+    const {axios, query, router, eventStore, attendeeStore} = this.props;
     if (query && query.id) {
+      eventStore.clearData();
+      attendeeStore.clearData();
       const event_id = query.id;
       if (event_id) {
         GetPendingEventDetails(eventDetails => {
@@ -52,6 +54,7 @@ class AppointmentSelectionView extends Component
           if (eventDetails && eventDetails.is_subscribed === true) {
             this.setState({notFoundContent: messages.EVENT_SUBSCRIBED_BEFORE})
           } else {
+            eventStore.clearData();
             eventStore.setEventDetails(eventDetails.data)
           }
         }, errorCallback => {
