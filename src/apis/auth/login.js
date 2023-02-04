@@ -1,7 +1,7 @@
 import endpoints from "@/constants/endpoints";
 
-export default (callback, data, axios, setErrors) => {
-  axios.get(endpoints.csrf);
+export default async(callback, data, axios, setErrors) => {
+  await axios.get(endpoints.csrf);
   axios.post(endpoints.login, data).then( response => {
     if (response && response.data) {
       callback(response.data)

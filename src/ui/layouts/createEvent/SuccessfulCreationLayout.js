@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { RoundedCard } from "@/ui/components/cards";
-import { CardTitle, TitleAndLink } from "@/ui/components/label";
+import { CardTitle, ReferenceLink, TitleAndLink } from "@/ui/components/label";
 
 export default class SuccessfulCreationLayout extends Component
 {
@@ -25,15 +25,17 @@ export default class SuccessfulCreationLayout extends Component
               {eventName}
             </label>
           </div>
-          <TitleAndLink
-            marginTopValue={6}
-            titleTextSize="md"
-            valueTextSize="md"
-            value={calendlyLink}
-            title="Here's your calendly link:"
-            className="text-center"
-            classNameValue="w-full overflow-y-auto overflow-x-hidden text-ellipsis"
-          />
+          <div className="flex flex-col items-center">
+            <label className="text-center">
+              Here's your calendly link:
+            </label>
+            <ReferenceLink
+              allowClick={true}
+              link={calendlyLink}
+              text="Copy Calendly Link"
+              afterCopyText="Link Copied"
+            />
+          </div>
           <button
             onClick={goToDashoard}
             className="mt-4 text-blue-700 font-semibold"

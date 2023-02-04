@@ -24,7 +24,6 @@ class SelectAvaiableDatesView extends Component {
 
   componentDidMount() {
     const {router, userStore, eventStore} = this.props;
-    eventStore.clearData();
     if (userStore.id === -1) {
       router.replace(pages.EVENTS_DASHBORAD);
     }

@@ -9,11 +9,6 @@ const nextConfig = {
         pathname: '/img/**',
         hostname: 'tailwindui.com'
       },
-      {
-        protocol: 'http',
-        pathname: '/assets/**',
-        hostname: '**.calendly.com'
-      }
     ],
   },
 }
