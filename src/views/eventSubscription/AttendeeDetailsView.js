@@ -41,7 +41,7 @@ class AttendeeDetailsView extends Component
   handleSubscribeEvent() {
     const {axios, router, eventStore, attendeeStore} = this.props;
     const {date, time} = eventStore.selectedAvailableDateAndTime;
-    const utcValue = moment(`${date}T${time}+02:00`).utc();
+    const utcValue = moment(`${date}T${time}+00:00`);
     const requestBody = {
       "event_id": eventStore.id,
       "name": attendeeStore.name,

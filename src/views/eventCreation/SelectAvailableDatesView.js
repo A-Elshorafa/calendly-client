@@ -24,8 +24,9 @@ class SelectAvaiableDatesView extends Component {
 
   componentDidMount() {
     const {router, userStore, eventStore} = this.props;
+    eventStore.clearData();
     if (userStore.id === -1) {
-      router.replace('/events-dashboard');
+      router.replace(pages.EVENTS_DASHBORAD);
     }
     router.beforePopState(({url}) => {
       if (url !== pages.SELECT_AVAILABLE_DATES && url !== pages.MEETING_DETAILS) {
@@ -34,7 +35,7 @@ class SelectAvaiableDatesView extends Component {
 
       return true;
     })
-    this.getCurrentMonthDays();
+    this.getCurrentMonthDays(pages.EVENTS_DASHBORAD);
   }
 
   componentWillUnMount() {
@@ -153,9 +154,9 @@ class SelectAvaiableDatesView extends Component {
           // don't add duration first time to get the exact from
           const duration = t===0? 0 : selectedDuration.value;
           compositeTime = startDate.add(duration, 'minutes').format('HH:mm:ss')
-          const isoFormat = date.concat('T', compositeTime, '+02:00');
+          const isoFormat = date.concat('T', compositeTime, '+00:00');
           // only in the future dates
-          if (moment().isSameOrBefore(moment(isoFormat)))
+          if (moment().utc().isSameOrBefore(moment(isoFormat)))
             generatedTimes.push({time: compositeTime});
           }
         filteredDatesAndTimes.push({date: date, times: generatedTimes})

@@ -89,7 +89,7 @@ export default class SelectAvaiableDatesLayout extends Component
             <div className="flex-1 flex flex-col items-start">
               <label className="flex flex-col text-lg font-semibold text-slate-600">
                 Host's available times
-                <span className="text-sm text-gray-500">(09:00 - 17:00) default, only the future times appears</span>
+                <span className="text-sm text-gray-500">(09:00 - 17:00) default, only the future times appears in UTC</span>
               </label>
               <ColumnSelectValues
                 valueKey="date"

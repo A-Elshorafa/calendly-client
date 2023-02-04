@@ -124,10 +124,10 @@ class UpcomingEventDetailsView extends Component
           onClickUpdate={this.handleOnClickUpdate}
           allowUpdate={eventNotes !== this.props.eventStore.notes}
           onChangeNotes={notes => this.setState({eventNotes: notes})}
-          appointmentTime={moment(subscribedOn).format('HH:mm')}
-          appointmentTimePlusDuration={moment(expireAt).format('HH:mm')}
-          selectedAppointmentDate={moment(subscribedOn).format('dddd, DD MMMM YYYY')}
+          appointmentTime={moment(subscribedOn).utc().format('HH:mm')}
+          appointmentTimePlusDuration={moment(expireAt).utc().format('HH:mm')}
           createdAtDate={moment(createdAt, "DD-MM-YYYY kk:mm:ss").format('DD MMMM YYYY')}
+          selectedAppointmentDate={moment(subscribedOn).utc().format('dddd, DD MMMM YYYY')}
         />
     )
   }
