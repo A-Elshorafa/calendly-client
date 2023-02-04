@@ -1,7 +1,7 @@
 import endpoints from "../../constants/endpoints";
 
-export default (callback, errorCallback, subscriptionData, axios) => {
-  axios.post(endpoints.subscribeToEvent, subscriptionData).then(response => {
+export default (callback, errorCallback, subscriptionData, thirdPartyName, axios) => {
+  axios.post(endpoints.subscribeToEvent(thirdPartyName), subscriptionData).then(response => {
     if (response?.data) {
       callback(response.data);
     }
