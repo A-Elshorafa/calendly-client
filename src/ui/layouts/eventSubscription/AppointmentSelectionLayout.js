@@ -58,8 +58,9 @@ export default class AppointmentSelectionLayout extends Component
             </div>
             <div className="w-4"></div>
             <div className="flex flex-1 flex-col pl-2">
-              <label className="text-lg font-semibold text-slate-600">
+              <label className="flex flex-col text-lg font-semibold text-slate-600">
                 Host's available times
+                <span className="text-sm text-gray-500">all times are on Europe/Istanbul</span>
               </label>
               <ColumnSelectValues
                 valueKey="date"

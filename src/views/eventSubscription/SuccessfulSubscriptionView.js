@@ -37,9 +37,9 @@ class SuccessfulSubscriptionView extends Component
 
   getSubscriptionFullDate() {
     const {eventStore} = this.props;
-    const date = moment(eventStore.expireAt, "DD-MM-YYYY kk-mm-ss").format("- kk:mm:ss, dddd, DD MMMM, YYYY");
-    const subscribedOn = moment(eventStore.subscribedOn, "DD-MM-YYYY kk-mm-ss").format("kk:mm:ss ")
-    return subscribedOn.concat(date);
+    const date = moment(eventStore.expireAt).format("- kk:mm:ss, dddd, DD MMMM, YYYY");
+    const subscribedOn = moment(eventStore.subscribedOn).format("kk:mm:ss")
+    return subscribedOn.concat(" ", date);
   }
 
   getEmailAccounts() {

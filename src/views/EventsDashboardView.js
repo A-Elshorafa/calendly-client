@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import React, { Component } from "react";
 import { EventsDashboardLayout } from "@/ui/Layouts";
 import { GetPendingUserEvents, GetUpComingUserEvents, GetAuthUserInfo, Logout, DeleteEvent } from "@/apis";
+import moment from "moment";
 
 const EVENT_STATUSES = {
   UP_COMING: 0,
@@ -70,11 +71,15 @@ class EventsDashboardView extends Component {
     
     GetUpComingUserEvents(userId, (events) => {
       if (events?.length > 0) {
+        const foramtedEvents = events.map(event => {
+          event.expire_at = moment(event.expire_at).format('YYYY-MM-DD HH:mm:ss');
+          return event;
+        })
         this.setState({
           pendingEvents: null,
-          upComingEvents: events,
           isEventsLoading: false,
-          areEventsNotFound: false
+          areEventsNotFound: false,
+          upComingEvents: foramtedEvents
         })
       } else {
         this.setState({isEventsLoading: false, areEventsNotFound: true});
@@ -87,11 +92,15 @@ class EventsDashboardView extends Component {
 
     GetPendingUserEvents(userId, (events) => {
       if (events?.length > 0) {
+        const foramtedEvents = events.map(event => {
+          event.expire_at = moment(event.expire_at).format('YYYY-MM-DD HH:mm:ss');
+          return event;
+        })
         this.setState({
           upComingEvents: null,
-          pendingEvents: events,
           isEventsLoading: false,
-          areEventsNotFound: false
+          areEventsNotFound: false,
+          pendingEvents: foramtedEvents
         })
       } else {
         this.setState({isEventsLoading: false, areEventsNotFound: true});
@@ -129,7 +138,7 @@ class EventsDashboardView extends Component {
   }
 
   handleCreateNewEvent() {
-    this.props.router.push(pages.SELECT_AVAILABLE_DATES)
+    this.props.router.push(pages.SELECT_AVAILABLE_DATES);
   }
 
   handleDeleteEvent(eventId, eventName) {

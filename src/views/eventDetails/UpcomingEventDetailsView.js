@@ -101,6 +101,7 @@ class UpcomingEventDetailsView extends Component
       eventName,
       subscribedOn,
       thirdPartyName,
+      thirdPartyLink
     } = this.props.eventStore;
     const {isLoading, modalMessage, eventNotes, pageNotAllowed} = this.state;
     return (
@@ -119,13 +120,14 @@ class UpcomingEventDetailsView extends Component
           isScreenLoading={isLoading}
           modalMessage={modalMessage}
           thirdParityName={thirdPartyName}
+          attendeeThirdPartyLink={thirdPartyLink}
           onClickUpdate={this.handleOnClickUpdate}
           allowUpdate={eventNotes !== this.props.eventStore.notes}
           onChangeNotes={notes => this.setState({eventNotes: notes})}
-          appointmentTime={moment(subscribedOn, "DD-MM-YYYY kk:mm:ss").format('HH:mm')}
+          appointmentTime={moment(subscribedOn).format('HH:mm')}
+          appointmentTimePlusDuration={moment(expireAt).format('HH:mm')}
+          selectedAppointmentDate={moment(subscribedOn).format('dddd, DD MMMM YYYY')}
           createdAtDate={moment(createdAt, "DD-MM-YYYY kk:mm:ss").format('DD MMMM YYYY')}
-          appointmentTimePlusDuration={moment(expireAt, "DD-MM-YYYY kk:mm:ss").format('HH:mm')}
-          selectedAppointmentDate={moment(subscribedOn, "DD-MM-YYYY kk:mm:ss").format('dddd, DD MMMM YYYY')}
         />
     )
   }

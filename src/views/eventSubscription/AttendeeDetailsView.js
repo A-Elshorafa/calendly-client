@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import React, { Component } from "react";
 import { SubscribeToEvent } from "@/apis";
 import { AttendeeDetailsLayout } from "@/ui/Layouts";
+import moment from "moment";
 
 class AttendeeDetailsView extends Component
 {
@@ -40,12 +41,13 @@ class AttendeeDetailsView extends Component
   handleSubscribeEvent() {
     const {axios, router, eventStore, attendeeStore} = this.props;
     const {date, time} = eventStore.selectedAvailableDateAndTime;
+    const utcValue = moment(`${date}T${time}+02:00`).utc();
     const requestBody = {
       "event_id": eventStore.id,
       "name": attendeeStore.name,
       "email": attendeeStore.email,
       "notes": attendeeStore.notes,
-      "subscribed_on": `${date} ${time}`,
+      "subscribed_on": utcValue,
     };
     this.setState({isScreenLoading: true});
     
@@ -67,7 +69,7 @@ class AttendeeDetailsView extends Component
     }, errorCallback => {
       this.setState({isScreenLoading: false});
       this.setState({modalType: 'error'})
-    }, requestBody, axios);
+    }, requestBody, eventStore.thirdPartyName, axios);
   }
 
   // validate name and email inputs
