@@ -91,28 +91,28 @@ export default class MeetingSummary extends Component
                 isRequired={true}
                 label="Meeting Location"
                 invalidText={authorizationLink? messages.CLICK_THIRD_ICON_TO_AUTHORIZE : ''}
-                leftComponent={() => {
+                leftComponent={() => (
                   authorizationLink?
-                    <Link
+                    (<Link
                       href={authorizationLink}
                     >
                       <Image
-                        alt=""
+                        alt="#"
                         width={24}
                         height={24}
                         className="ml-2 my-2" //todo: find better way to handle input padding (with left component) automatically
-                        src="http://assets.calendly.com/assets/frontend/media/zoom-dd4ce5bef905d2b74c0a.svg"
+                        src="/48X48/zoom48.svg"
                       />
-                    </Link>
+                    </Link>)
                   :  
-                    <Image
-                      alt=""
+                    (<Image
+                      alt="#"
                       width={24}
                       height={24}
                       className="ml-2 my-2" //todo: find better way to handle input padding (with left component) automatically
-                      src="http://assets.calendly.com/assets/frontend/media/zoom-dd4ce5bef905d2b74c0a.svg"
-                    />
-                  }
+                      src="/48X48/zoom48.svg"
+                    />)
+                  )
                 }
               />
               <LabeledInput 
