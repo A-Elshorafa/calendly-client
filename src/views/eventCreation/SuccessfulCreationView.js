@@ -33,10 +33,10 @@ class SuccessfulCreationView extends Component
     }
   }
 
-  handleRouting(url) {
+  handleRouting() {
     const {router, eventStore} = this.props;
     eventStore.clearData();
-    router.replace(url);
+    router.replace(pages.EVENTS_DASHBORAD);
   }
 
   render() {
@@ -45,8 +45,7 @@ class SuccessfulCreationView extends Component
       <SuccessfulCreationLayout
         eventName={eventStore.eventName}
         calendlyLink={eventStore.calendlyLink}
-        goToDashoard={()=>this.handleRouting(pages.EVENTS_DASHBORAD)}
-        onClickCalendly={()=>this.handleRouting(eventStore.calendlyLink)}
+        goToDashoard={()=>this.handleRouting()}
       />
     )
   }

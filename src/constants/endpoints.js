@@ -15,9 +15,9 @@ const endpoints = {
   pendingEvents: url.concat("/api/getPendingEvents"),
   upcomingEvents: url.concat("/api/getUpComingEvents"),
   updateEventNotes: url.concat("/api/updateEventNotes"),
-  subscribeToEvent: url.concat("/api/subscribeToEvent"),
   getPendingEventDetails: url.concat("/api/getPendingEventDetails"),
   getUpcomingEventDetails: url.concat("/api/getUpcomingEventDetails"),
+  subscribeToEvent: thirdPartyName => url.concat(`/api/subscribeToEvent?third_party_name=${thirdPartyName}`),
 }
 
 export default endpoints;

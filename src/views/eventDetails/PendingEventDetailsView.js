@@ -137,7 +137,7 @@ class PendingEventDetailsView extends Component
         onCancelDeleteModal={this.handleCancelDeleteEventModal}
         selectedAvailableTimes={selectedAvailableDatesAndTimes}
         onConfirmDeleteModal={this.handleConfrimDeleteEventModal}
-        expiredAtDate={moment(expireAt, "DD-MM-YYYY kk-mm-ss").format("dddd, DD MMMM YYYY")}
+        expiredAtDate={moment(expireAt).format("dddd, DD MMMM YYYY")}
         createdAtDate={moment(createdAt, "DD-MM-YYYY kk:mm:ss").format("dddd, DD MMMM YYYY")} // 27 JANUARY 2023
       />
     )

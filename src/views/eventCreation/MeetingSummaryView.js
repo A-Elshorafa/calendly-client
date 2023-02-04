@@ -122,6 +122,7 @@ class MeetingSummaryView extends Component
         onConfirmModal={this.handleOnConfirmModal}
         allowContinue={eventStore.eventName !== ""}
         duration={eventStore.selectedDuration.value}
+        authorizationLink={userStore.authorizationLink}
         onChangeMeetingName={this.handleOnChangeEventName}
         onChangeMeetingAgenda={value => {eventStore.setAgenda(value)}}
         onChangeCustomUrl={value => {eventStore.setCalendlyLink(value)}}

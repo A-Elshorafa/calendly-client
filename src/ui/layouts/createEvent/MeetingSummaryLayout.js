@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import React, {Component} from "react";
 import messages from "@/constants/messages";
@@ -22,13 +23,14 @@ export default class MeetingSummary extends Component
       allowContinue,
       isScreenLoading,
       validationErrors,
+      authorizationLink,
       // callbacks
       onCancelModal,
       onConfirmModal,
       onClickContinue,
       onChangeCustomUrl,
       onChangeMeetingName,
-      onChangeMeetingAgenda,
+      onChangeMeetingAgenda
     } = this.props;
     return (
       <div className="flex justify-center py-8 bg-gray-400 h-full relative">
@@ -88,15 +90,30 @@ export default class MeetingSummary extends Component
                 className="mt-4"
                 isRequired={true}
                 label="Meeting Location"
-                leftComponent={() => (
-                  <Image
-                    alt=""
-                    width={24}
-                    height={24}
-                    className="ml-2 my-2" //todo: find better way to handle input padding (with left component) automatically
-                    src="http://assets.calendly.com/assets/frontend/media/zoom-dd4ce5bef905d2b74c0a.svg"
-                  />
-                )}
+                invalidText={authorizationLink? messages.CLICK_THIRD_ICON_TO_AUTHORIZE : ''}
+                leftComponent={() => {
+                  authorizationLink?
+                    <Link
+                      href={authorizationLink}
+                    >
+                      <Image
+                        alt=""
+                        width={24}
+                        height={24}
+                        className="ml-2 my-2" //todo: find better way to handle input padding (with left component) automatically
+                        src="http://assets.calendly.com/assets/frontend/media/zoom-dd4ce5bef905d2b74c0a.svg"
+                      />
+                    </Link>
+                  :  
+                    <Image
+                      alt=""
+                      width={24}
+                      height={24}
+                      className="ml-2 my-2" //todo: find better way to handle input padding (with left component) automatically
+                      src="http://assets.calendly.com/assets/frontend/media/zoom-dd4ce5bef905d2b74c0a.svg"
+                    />
+                  }
+                }
               />
               <LabeledInput 
                 isRequired={true}
