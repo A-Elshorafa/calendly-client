@@ -29,4 +29,4 @@
   
   2- Enter localhost:3000
   
-  3- Start login with the seeder email
+  3- Start login with the seeder email after finish running the Calendly-Server
