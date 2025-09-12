@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import React, {Component} from "react";
 import MeetingSummaryView from "@/views/eventCreation/MeetingSummaryView";
-
+/* Trigger Webhook */
 class MeetingSummary extends Component
 {
   render() {
