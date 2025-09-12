@@ -5,6 +5,8 @@
     npm install
     or
     yarn
+    or
+    bun
     
   Second:
   
